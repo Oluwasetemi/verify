@@ -19,4 +19,4 @@ Some of the notable feature of this project includes
 - Forms are submitted after the `paste` event - harder than I thought 💭 😴 
 - Form `submit` event is triggered when you fill in the last input
 
-TODO: handle the clearing of form inputs after the submitting of the form.
+TODO: handle the clearing of form inputs after the submitting of the form. DONE:

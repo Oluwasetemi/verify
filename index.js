@@ -1,4 +1,3 @@
-console.log("working");
 // select the form
 const form = document.querySelector('[name="verify"]');
 const inputs = form.querySelectorAll('input[type="text"]');
@@ -13,7 +12,7 @@ function handleInput(e) {
     // input.select();
   }
 
-  if (e.inputType === "deleteContentBackward") {
+  if (input.value && e.inputType === "deleteContentBackward") {
     input.previousElementSibling.focus();
   }
 }
@@ -22,7 +21,7 @@ function handlePaste(e) {
   const paste = e.clipboardData.getData("text");
   // loop over each input and populate
   inputs.forEach((input, i) => {
-      input.value = paste[i] || "";
+    input.value = paste[i] || "";
     //   when we get to the last value to be pasted trigger submit
     if (i === inputs.length - 1) {
       input.value = paste[i] || "";
@@ -54,6 +53,10 @@ function handleSubmit(e) {
   const allValues = inputArr.join("");
   console.log(allValues);
   console.log("form submitted");
+  setTimeout(() => {
+    alert(`form submitted with ${allValues}`);
+    form.reset();
+  }, 3000);
   return false;
 }
 // 1. select the text when the next input is focused

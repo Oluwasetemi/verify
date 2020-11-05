@@ -1,8 +1,12 @@
 // select the form
 const form = document.querySelector('[name="verify"]');
 const inputs = form.querySelectorAll('input[type="text"]');
+const submitButton = document.querySelector('input[type="submit"]');
+
 
 function handleInput(e) {
+  // enable the submit button
+  submitButton.disabled = false;
   // form.clear();
   const input = e.target;
 
@@ -12,24 +16,33 @@ function handleInput(e) {
     // input.select();
   }
 
-  if (input.value && e.inputType === "deleteContentBackward") {
-    input.previousElementSibling.focus();
+  // 3. support for backspacing from 1 input to another
+  if (input.previousElementSibling) {
+    if (e.inputType === "deleteContentBackward") {
+      // input.value = '';
+      input.previousElementSibling.focus();
+    }
+
   }
 }
 
 function handlePaste(e) {
   const paste = e.clipboardData.getData("text");
-  // loop over each input and populate
-  inputs.forEach((input, i) => {
-    input.value = paste[i] || "";
-    //   when we get to the last value to be pasted trigger submit
-    if (i === inputs.length - 1) {
+  if (paste.length === 6) {
+    // loop over each input and populate
+    inputs.forEach((input, i) => {
       input.value = paste[i] || "";
-      // gather all the values
-      // trigger submit
-      form.dispatchEvent(new Event("submit", { cancelable: true }));
-    }
-  });
+      //   when we get to the last value to be pasted trigger submit
+      if (i === inputs.length - 1) {
+        input.value = paste[i] || "";
+        // gather all the values
+        // trigger submit
+        form.dispatchEvent(new Event("submit", { cancelable: true }));
+      }
+    });
+  } else {
+    alert('The length of the Item you\'re trying to paste is less that 6')
+  }
 
   // 2. Auto submit the form if all fields are filled after a paste
   // check if all the input has a value
@@ -68,5 +81,5 @@ function handleSubmit(e) {
 //   }
 // });
 
-// 3. support for backspacing from 1 input to another
+// handle the submit form event
 form.addEventListener("submit", handleSubmit);
